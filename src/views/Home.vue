@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-if="posts">
+      <post-card v-for="post in posts" :post="post" :key="post.id" />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import api from "@/api";
+import PostCard from "@/components/PostCard";
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  name: "home",
+  components: { PostCard },
+  data() {
+    return {
+      posts: undefined
+    };
+  },
+  mounted() {
+    api.getAllPosts(posts => (this.posts = posts));
   }
-}
+};
 </script>
